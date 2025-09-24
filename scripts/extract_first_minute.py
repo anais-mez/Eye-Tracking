@@ -18,7 +18,7 @@ for participant, group in groups:
 #         start_time = group['Timestamp'].min()
 #         mask = group['Timestamp'] > (start_time + 60000)
 #         rest = group[mask]
-#         output_path = f'data\\prototype_data\\after1min_{participant}.csv'
+#         output_path = f'..\\data\\prototype_data\\after1min_{participant}.csv'
 #         rest.to_csv(output_path, index=False)
 #     print('First minute removed and saved to one file per participant in prototype_data/')
 
