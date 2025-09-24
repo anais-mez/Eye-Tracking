@@ -1,0 +1,3 @@
+Group,Shapiro_stat,Shapiro_p,Mean,SD,Test_to_use
+First_minute_MeanSpeed,nan,nan,1010.0774332877784,105.85047548008089,wilcoxon
+Last_minute_MeanSpeed,nan,nan,1131.7120172799134,103.02794394835102,wilcoxon

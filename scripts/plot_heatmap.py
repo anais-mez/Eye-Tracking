@@ -8,15 +8,17 @@ import os
 BACKGROUND_IMG = os.path.join(os.path.dirname(__file__), '..', 'Screenshot.png')
 
 if len(sys.argv) < 2:
-    print('Usage: python plot_heatmap.py <csv_file1>')
+    print('Usage: python plot_heatmap.py <csv_file1> <csv_file2>')
     sys.exit(1)
 
 csv_file1 = sys.argv[1]
+csv_file2 = sys.argv[2]
 df = pd.read_csv(csv_file1)
+df2 = pd.read_csv(csv_file2)
 img = cv2.imread(BACKGROUND_IMG)
 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-output_dir = os.path.join(os.path.dirname(__file__), '../data/', 'heatmaps', 'P3')
+output_dir = os.path.join(os.path.dirname(__file__), '../data/', 'heatmaps')
 os.makedirs(output_dir, exist_ok=True)
 
 # --- For each minute, plot heatmap ---
@@ -56,14 +58,18 @@ if not df.empty:
     ax.imshow(img)
     sns.kdeplot(
         x=df['X'], y=df['Y'],
-        cmap='spring', fill=True, alpha=0.4, thresh=0.05, levels=100, ax=ax
+        cmap='spring', fill=True, alpha=0.2, thresh=0.05, levels=100, ax=ax
     )
-    ax.set_title('Gaze Heatmap - P3')
+    sns.kdeplot(
+        x=df2['X'], y=df2['Y'],
+        cmap='spring', fill=True, alpha=0.2, thresh=0.05, levels=100, ax=ax
+    )
+    ax.set_title('Gaze Heatmap - Simplified vs Enriched')
     ax.axis('off')
     plt.tight_layout()
     
     filename = os.path.splitext(os.path.basename(csv_file1))[0]
-    plt.savefig(os.path.join(output_dir, f'heatmap_P3.png'))
+    plt.savefig(os.path.join(output_dir, f'heatmap_simplified_vs_enriched.png'))
     plt.close(fig)
     
     print(f"Heatmap saved in {output_dir}")

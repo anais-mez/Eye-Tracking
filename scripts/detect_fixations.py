@@ -10,7 +10,7 @@ MAX_DISTANCE = 50  # Dispersion threshold (pixels)
 MIN_DURATION = 100  # Duration threshold (ms)
 
 file_path = '..\\data\\'
-file_params = 'prototype_data\\after1min_'
+file_params = 'prototype_data\\diff'
 
 test_files = glob.glob(file_path + file_params + '*.csv')
 
@@ -68,7 +68,6 @@ def detect_fixations_in_window(df_window):
 for file in test_files:
     df = pd.read_csv(file)
     df = df[(df['X'] != 0.0) & (df['Y'] != 0.0)]
-    participant = file.replace(file_path + file_params, '').replace('.csv', '')
     if 'Timestamp' in df.columns:
         t0 = df['Timestamp'].min()
         tmax = df['Timestamp'].max()
@@ -79,20 +78,20 @@ for file in test_files:
     else:
         df['t_sec'] = 0
 
-    # All minutes
-    total_minutes = int(df['t_sec'].max() // 60) + 1
-    for m in range(total_minutes):
-        df_minute = df[(df['t_sec'] >= m*60) & (df['t_sec'] < (m+1)*60)]
-        fixations = detect_fixations_in_window(df_minute)
-        fixation_durations = [f['duration'] for f in fixations]
-        if fixation_durations:
-            mean_fixation = sum(fixation_durations) / len(fixation_durations)
-            results.append([participant, f"minute_{m+1}", m*60, len(fixations), mean_fixation])
-        else:
-            results.append([participant, f"minute_{m+1}", m*60, 0, 0])
+    for participant, group in df.groupby('Participant') if 'Participant' in df.columns else [(file.replace(file_path + file_params, '').replace('.csv', ''), df)]:
+        total_minutes = int(group['t_sec'].max() // 60) + 1
+        for m in range(total_minutes):
+            df_minute = group[(group['t_sec'] >= m*60) & (group['t_sec'] < (m+1)*60)]
+            fixations = detect_fixations_in_window(df_minute)
+            fixation_durations = [f['duration'] for f in fixations]
+            if fixation_durations:
+                mean_fixation = sum(fixation_durations) / len(fixation_durations)
+                results.append([participant, f"minute_{m+1}", m*60, len(fixations), mean_fixation])
+            else:
+                results.append([participant, f"minute_{m+1}", m*60, 0, 0])
 
 # Save fixations to CSV
-output_csv = os.path.join(file_path, 'stats', 'fixations_stats.csv')
+output_csv = os.path.join(file_path, 'stats', 'fixations_stats-diff.csv')
 os.makedirs(os.path.dirname(output_csv), exist_ok=True)
 with open(output_csv, 'w', newline='', encoding='utf-8') as f:
     writer = csv.writer(f)
@@ -106,7 +105,6 @@ saccades_window_results = []
 for file in test_files:
     df = pd.read_csv(file)
     df = df[(df['X'] != 0.0) & (df['Y'] != 0.0)]
-    participant = file.replace(file_path + file_params, '').replace('.csv', '')
     if 'Timestamp' in df.columns:
         t0 = df['Timestamp'].min()
         tmax = df['Timestamp'].max()
@@ -117,16 +115,16 @@ for file in test_files:
     else:
         df['t_sec'] = 0
 
-    # Par minute
-    total_minutes = int(df['t_sec'].max() // 60) + 1
-    for m in range(total_minutes):
-        df_minute = df[(df['t_sec'] >= m*60) & (df['t_sec'] < (m+1)*60)]
-        fixations = detect_fixations_in_window(df_minute)
-        nb_saccades = max(0, len(fixations) - 1)
-        saccades_window_results.append([participant, f"minute_{m+1}", m*60, nb_saccades])
+    for participant, group in df.groupby('Participant') if 'Participant' in df.columns else [(file.replace(file_path + file_params, '').replace('.csv', ''), df)]:
+        total_minutes = int(group['t_sec'].max() // 60) + 1
+        for m in range(total_minutes):
+            df_minute = group[(group['t_sec'] >= m*60) & (group['t_sec'] < (m+1)*60)]
+            fixations = detect_fixations_in_window(df_minute)
+            nb_saccades = max(0, len(fixations) - 1)
+            saccades_window_results.append([participant, f"minute_{m+1}", m*60, nb_saccades])
 
 # Save saccades per window to CSV
-output_saccades_window = os.path.join(file_path, 'stats', 'saccades_stats.csv')
+output_saccades_window = os.path.join(file_path, 'stats', 'saccades_stats-diff.csv')
 os.makedirs(os.path.dirname(output_saccades_window), exist_ok=True)
 with open(output_saccades_window, 'w', newline='', encoding='utf-8') as f:
     writer = csv.writer(f)
