@@ -23,26 +23,26 @@ for file in test_files:
         df['t_sec'] = df['Timestamp'] - t0
 
     for participant, group in df.groupby('Participant') if 'Participant' in df.columns else [(file.replace(file_path + file_params, '').replace('.csv', ''), df)]:
-        total_minutes = int(group['t_sec'].max() // 60) + 1
-        for m in range(total_minutes):
-            df_minute = group[(group['t_sec'] >= m*60) & (group['t_sec'] < (m+1)*60)]
-            if not df_minute.empty:
-                mean_x = df_minute['X'].mean()
-                std_x = df_minute['X'].std()
-                mean_y = df_minute['Y'].mean()
-                std_y = df_minute['Y'].std()
-                results.append([participant, f"minute_{m+1}", m*60, mean_x, std_x, mean_y, std_y])
+        # total_minutes = int(group['t_sec'].max() // 60) + 1
+        # for m in range(total_minutes):
+        #     df_minute = group[(group['t_sec'] >= m*60) & (group['t_sec'] < (m+1)*60)]
+        #     if not df_minute.empty:
+        #         mean_x = df_minute['X'].mean()
+        #         std_x = df_minute['X'].std()
+        #         mean_y = df_minute['Y'].mean()
+        #         std_y = df_minute['Y'].std()
+        #         results.append([participant, f"minute_{m+1}", m*60, mean_x, std_x, mean_y, std_y])
 
     # All 30s windows
-    # total_30s = int(df['t_sec'].max() // 30) + 1
-    # for s in range(total_30s):
-    #     df_30s = df[(df['t_sec'] >= s*30) & (df['t_sec'] < (s+1)*30)]
-    #     if not df_30s.empty:
-    #         mean_x_30 = df_30s['X'].mean()
-    #         std_x_30 = df_30s['X'].std()
-    #         mean_y_30 = df_30s['Y'].mean()
-    #         std_y_30 = df_30s['Y'].std()
-    #         results.append([participant, f"30s_{s+1}", s*30, mean_x_30, std_x_30, mean_y_30, std_y_30])
+        total_30s = int(df['t_sec'].max() // 30) + 1
+        for s in range(total_30s):
+            df_30s = df[(df['t_sec'] >= s*30) & (df['t_sec'] < (s+1)*30)]
+            if not df_30s.empty:
+                mean_x_30 = df_30s['X'].mean()
+                std_x_30 = df_30s['X'].std()
+                mean_y_30 = df_30s['Y'].mean()
+                std_y_30 = df_30s['Y'].std()
+                results.append([participant, f"30s_{s+1}", s*30, mean_x_30, std_x_30, mean_y_30, std_y_30])
 
     # All seconds
     # total_sec = int(df['t_sec'].max()) + 1
@@ -61,4 +61,5 @@ with open(output_csv, 'w', newline='', encoding='utf-8') as f:
     writer = csv.writer(f)
     writer.writerow(['Participant', 'Window', 'Start', 'Mean_X', 'Std_X', 'Mean_Y', 'Std_Y'])
     writer.writerows(results)
+
 print(f"\nResults have been saved to {output_csv}")

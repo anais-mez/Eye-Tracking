@@ -79,16 +79,18 @@ for file in test_files:
         df['t_sec'] = 0
 
     for participant, group in df.groupby('Participant') if 'Participant' in df.columns else [(file.replace(file_path + file_params, '').replace('.csv', ''), df)]:
-        total_minutes = int(group['t_sec'].max() // 60) + 1
-        for m in range(total_minutes):
-            df_minute = group[(group['t_sec'] >= m*60) & (group['t_sec'] < (m+1)*60)]
-            fixations = detect_fixations_in_window(df_minute)
+        total_windows = int(group['t_sec'].max() // 30) + 1
+        for w in range(total_windows):
+            df_window = group[(group['t_sec'] >= w*30) & (group['t_sec'] < (w+1)*30)]
+            fixations = detect_fixations_in_window(df_window)
             fixation_durations = [f['duration'] for f in fixations]
+            window_label = f"window_{w+1}"
+            window_start = w*30
             if fixation_durations:
                 mean_fixation = sum(fixation_durations) / len(fixation_durations)
-                results.append([participant, f"minute_{m+1}", m*60, len(fixations), mean_fixation])
+                results.append([participant, window_label, window_start, len(fixations), mean_fixation])
             else:
-                results.append([participant, f"minute_{m+1}", m*60, 0, 0])
+                results.append([participant, window_label, window_start, 0, 0])
 
 # Save fixations to CSV
 output_csv = os.path.join(file_path, 'stats', 'fixations_stats-diff.csv')
@@ -116,12 +118,14 @@ for file in test_files:
         df['t_sec'] = 0
 
     for participant, group in df.groupby('Participant') if 'Participant' in df.columns else [(file.replace(file_path + file_params, '').replace('.csv', ''), df)]:
-        total_minutes = int(group['t_sec'].max() // 60) + 1
-        for m in range(total_minutes):
-            df_minute = group[(group['t_sec'] >= m*60) & (group['t_sec'] < (m+1)*60)]
-            fixations = detect_fixations_in_window(df_minute)
+        total_windows = int(group['t_sec'].max() // 30) + 1
+        for w in range(total_windows):
+            df_window = group[(group['t_sec'] >= w*30) & (group['t_sec'] < (w+1)*30)]
+            fixations = detect_fixations_in_window(df_window)
             nb_saccades = max(0, len(fixations) - 1)
-            saccades_window_results.append([participant, f"minute_{m+1}", m*60, nb_saccades])
+            window_label = f"window_{w+1}"
+            window_start = w*30
+            saccades_window_results.append([participant, window_label, window_start, nb_saccades])
 
 # Save saccades per window to CSV
 output_saccades_window = os.path.join(file_path, 'stats', 'saccades_stats-diff.csv')

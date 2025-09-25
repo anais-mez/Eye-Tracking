@@ -3,7 +3,7 @@ from scipy.stats import mannwhitneyu
 import os
 
 input_csv = '../data/stats/mean_speed_stats-diff.csv'
-output_csv = '../data/stats/wilcoxon_mean_speed-diff.csv'
+output_csv = '../data/stats/wilcoxon_mean_speed-diff_second.csv'
 
 df = pd.read_csv(input_csv)
 groups = ['simplified', 'enriched']

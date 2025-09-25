@@ -3,7 +3,7 @@ from scipy.stats import mannwhitneyu
 import os
 
 input_csv = '../data/stats/fixations_stats-diff.csv'
-output_csv = '../data/stats/wilcoxon_fixations-diff.csv'
+output_csv = '../data/stats/wilcoxon_fixations-diff_second.csv'
 
 df = pd.read_csv(input_csv)
 groups = ['simplified', 'enriched']
@@ -11,8 +11,8 @@ measures = ['Nb_Fixations', 'Mean_Duration_ms']
 
 results = []
 for measure in measures:
-    vals1 = df[df['Participant'] == groups[0]][measure].dropna().values
-    vals2 = df[df['Participant'] == groups[1]][measure].dropna().values
+    vals1 = df[(df['Participant'] == groups[0]) & (df[measure] != 0)][measure].dropna().values
+    vals2 = df[(df['Participant'] == groups[1]) & (df[measure] != 0)][measure].dropna().values
     if len(vals1) > 0 and len(vals2) > 0:
         stat, p = mannwhitneyu(vals1, vals2, alternative='two-sided')
     else:
