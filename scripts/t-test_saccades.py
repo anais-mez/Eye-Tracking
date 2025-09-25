@@ -10,6 +10,7 @@ measure = 'Nb_Saccades'
 
 df['minute_num'] = df['Window'].str.extract(r'minute_(\d+)').astype(int)
 
+# test seconds and not median, all datas
 first_minute = df[df['minute_num'] == df['minute_num'].min()]
 last_minute = df[df['minute_num'] == df['minute_num'].max()]
 
