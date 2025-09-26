@@ -58,7 +58,7 @@ if not df.empty:
     ax.imshow(img)
     sns.kdeplot(
         x=df['X'], y=df['Y'],
-        cmap='spring', fill=True, alpha=0.2, thresh=0.05, levels=100, ax=ax
+        cmap='summer', fill=True, alpha=0.2, thresh=0.05, levels=100, ax=ax
     )
     sns.kdeplot(
         x=df2['X'], y=df2['Y'],
