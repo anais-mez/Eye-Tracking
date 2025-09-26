@@ -1,0 +1,45 @@
+--- MEAN
+
+There was no significant difference in the mean value of Mean_X between the first minute (mean=735.99) and the last minute (mean=929.89) (t=-1.13, p=0.32).
+
+There was no significant difference in the mean value of Std_X between the first minute (mean=393.08) and the last minute (mean=336.60) (t=1.48, p=0.214).
+
+There was no significant difference in the mean value of Mean_Y between the first minute (mean=557.53) and the last minute (mean=571.17) (t=-0.18, p=0.863).
+
+There was no significant difference in the mean value of Std_Y between the first minute (mean=251.20) and the last minute (mean=345.58) (t=-1.98, p=0.119).
+
+There was no significant difference in the mean x between the enriched group (mean = 762.37) and the simplified group (mean = 722.00) (Wilcoxon U = 3.4e+03, p = 0.524).
+
+There was no significant difference in the std x between the enriched group (mean = 323.83) and the simplified group (mean = 307.34) (Wilcoxon U = 3.1e+03, p = 0.133).
+
+The enriched group showed a higher mean y (mean = 647.85) compared to the simplified group (mean = 573.50) (Wilcoxon U = 2.3e+03, p = 8.1e-05).
+
+The enriched group showed a higher std y (mean = 253.36) compared to the simplified group (mean = 204.16) (Wilcoxon U = 2.7e+03, p = 0.00979).
+
+
+
+--- FIXATIONS
+
+Participants showed a decrease in the nomber of fixations during the last minute (mean = 87.00) compared to the first minute (mean = 181.80) (t = 11, p = 0.00035).
+
+Participants showed an increase in the mean duration ms during the last minute (mean = 394.24) compared to the first minute (mean = 265.91) (t = -5.1, p = 0.00685).
+
+The enriched group showed a higher nb fixations (mean = 155.95) compared to the simplified group (mean = 79.92) (Wilcoxon U = 58, p = 2.4e-28).
+
+The enriched group showed a higher mean duration ms (mean = 315.48) compared to the simplified group (mean = 283.24) (Wilcoxon U = 1.8e+03, p = 3.78e-08).
+
+
+
+--- MEAN SPEED
+
+There was no significant difference in the mean speed between the first minute (mean = 993.95) and the last minute (mean = 1001.77) (t = -0.06, p = 0.955).
+
+The enriched group showed a lower mean speed (mean = 938.14) compared to the simplified group (mean = 1097.39) (Wilcoxon U = 4.7e+03, p = 0.000592).
+
+
+
+--- SACCADES
+
+Participants showed a decrease in the nomber of saccades during the last minute (mean = 86.00) compared to the first minute (mean = 180.80) (t = 11, p = 0.00035).
+
+The enriched group showed a higher nb saccades (mean = 154.95) compared to the simplified group (mean = 78.92) (Wilcoxon U = 58, p = 2.4e-28).
